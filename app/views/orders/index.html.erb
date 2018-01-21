@@ -1,0 +1,12 @@
+<%= content_for :content do %>
+  <%= render 'shared/title', title: '订单管理' %>
+
+  <div class="list-group">
+    <% @orders.each do |order| %>
+      <a href="<%= order_path(order) %>" class="list-group-item list-group-item-action">
+          <%= order.to_json %>
+      </a>
+    <% end %>
+  </div>
+
+<% end %>

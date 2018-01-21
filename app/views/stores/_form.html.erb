@@ -1,0 +1,69 @@
+<!-- form start -->
+<%= form_with(model: store, local: true) do |form| %>
+  <div class="box-body">
+    <% if store.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(store.errors.count, "error") %>
+        prohibited this store from being saved:
+        </h2>
+
+        <ul>
+          <% store.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+    <div class="form-group">
+      <%= form.label :name, '*商铺名：' %>
+      <%= form.text_field :name, id: :store_name, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :intro, '*商铺介绍：' %>
+      <%= form.text_field :intro, id: :store_intro, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.fields_for :business_hours do |business_hour| %>
+        <%= render 'business_hour_fields', f: business_hour %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association('Add Business Hour', form, :business_hours,
+                                    class: 'btn btn-outline-dark') %>
+      </div>
+    </div>
+
+
+    <% if current_user.admin? %>
+      <div class="form-group">
+        <%= form.label :user_id, '*商铺老板：' %>
+        <%= form.collection_select(:user_id, User.all, :id, :email,
+                                   {include_blank: false},
+                                   {class: 'form-control'}) %>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :location_id, '*入驻食堂：' %>
+      <%= form.collection_select(:location_id, Location.all, :id, :name,
+                                 {include_blank: true},
+                                 {class: 'form-control'}) %>
+    </div>
+
+<% @store.build_picture unless @store.picture %>
+    <div class="form-group">
+      <%= form.label :picture, '图片：' %>
+      <%= form.fields_for :picture do |f| %>
+        <%= f.file_field :picture, class: 'form-control' %>
+      <% end %>
+    </div>
+
+    <div class="box-footer text-right">
+      <%= form.submit '确 认', class: 'btn btn-outline-info' %>
+    </div>
+  <% end %>
+  </div>
+

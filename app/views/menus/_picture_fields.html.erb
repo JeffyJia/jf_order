@@ -1,0 +1,17 @@
+<div class="nested-fields">
+  <div class="form-group">
+    <%= f.label :name, '图片' %>
+    <div class="row">
+      <div class="col-6">
+        <%= f.file_field :name, class: 'form-control' %>
+      </div>
+      <div class="col-3">
+        <%= link_association_image @menu, f %>
+      </div>
+      <div class="col-3 text-right">
+        <%= link_to_remove_association "移除这张", f, class: 'btn btn-outline-dark' %>
+      </div>
+    </div>
+  </div>
+</div>
+

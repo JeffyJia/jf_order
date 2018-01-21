@@ -1,0 +1,20 @@
+<%= content_for :content do %>
+<%= render 'shared/title', title: "#{@store.name} 商铺详情" %>
+
+  <div class="btn-group" role="group">
+    <%= link_to '返回', stores_path, class: 'btn btn-sm btn-outline-dark' %>
+    <%= link_to '编辑', edit_store_path(@store), class: 'btn btn-sm btn-outline-dark mx-1' %>
+    <%= link_to '+添加菜品', new_menu_path(store_id: @store), class: 'btn btn-sm btn-outline-danger' %>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <% @store.menus.each do |menu| %>
+        <div class="col-4 my-3">
+          <%= render 'menus/menu', menu: menu %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+<% end %>

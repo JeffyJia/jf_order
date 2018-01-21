@@ -1,0 +1,123 @@
+<%= content_for :content do %>
+  <style>
+    .dropzone {
+      border: 2px dashed #17a2b8;
+      border-radius: 5px;
+      background: white;
+    }
+  </style>
+
+  <%= render 'shared/title', title: '菜品信息' %>
+
+  <div class="container">
+    <%= form_for @menu, url: pictures_menu_path,
+      method: :post,
+      html: {multipart: true,
+             class: 'dropzone',
+             id: 'my-dropzone'} do |f| %>
+             <div class="dz-message needsclick">
+               <h3>把菜品图片拖拽到这里</h3> 或者
+               <strong>点击这里</strong> 上传
+             </div>
+           <% end %>
+           <script>
+             (function () {
+               Dropzone.autoDiscover = false;
+
+               $("#my-dropzone").dropzone({
+                 maxFilesize: 2,
+                 maxFiles: 5,
+                 addRemoveLinks: true,
+                 clickable: true,
+                 paramName: 'menu[picture]',
+                 success: function (file, response) {
+                   $(file.previewElement).find('.dz-remove').attr('id', response.pictureID);
+                   $(file.previewElement).addClass('dz-success');
+                 },
+                 removedfile: function (file) {
+                   var id = $(file.previewTemplate).find('.dz-remove').attr('id');
+
+                   $.ajax({
+                     type: 'DELETE',
+                     beforeSend: function (xhr) {
+                       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                     },
+                     url: "<%= pictures_menu_path(@menu) %>/" + id,
+                     success: function (data) {
+                       console.log(data.message);
+                     }
+                   });
+
+                   var previewElement;
+                   return (previewElement = file.previewElement) != null ? (previewElement.parentNode.removeChild(file.previewElement)) : (void 0);
+                 },
+                 init: function () {
+                   var me = this;
+                   this.on("addedfile", function(file) {
+                     file.previewElement.addEventListener("click", function() {
+                       me.removeFile(file);
+                     });
+                   });
+
+
+                   $.get("<%= Rails.application.routes.url_helpers.pictures_menu_path @menu %>", function (data) {
+                     $.each(data.images, function (key, value) {
+                       if (data.images !== undefined && data.images.length > 0) {
+                         me.emit("addedfile", value);
+                         me.emit("thumbnail", value, value.src);
+                         me.emit("complete", value);
+
+                         $(value._removeLink).attr("id", value.id);
+                       }
+                     });
+                   });
+                 }
+               });
+             })();
+           </script>
+
+           <table class="table">
+             <tbody>
+               <tr>
+                 <th>菜名：</th>
+                 <td><%= @menu.name %></td>
+               </tr>
+               <tr>
+                 <th>价格：</th>
+                 <td>¥<%= @menu.real_price %> 元</td>
+               </tr>
+               <tr>
+                 <th>商铺：</th>
+                 <td><%= @menu.store.name %></td>
+               </tr>
+               <tr>
+                 <th>店家：</th>
+                 <td><%= @menu.store.user.email %></td>
+               </tr>
+               <tr>
+                 <th>介绍：</th>
+                 <td>
+                   <pre><%= truncate @menu.intro %></pre>
+                 </td>
+               </tr>
+               <tr>
+                 <th>操作：</th>
+                 <td>
+
+                   <div class="btn-group btn-group-sm">
+                     <%= link_to '编辑', edit_menu_path(@menu), class: 'btn btn-sm btn-outline-dark mx-1' %>
+                     <% if @menu.publish? %>
+                       <%= link_to '下线', unpublish_menu_path(@menu), method: :post, class: 'btn btn-sm btn-outline-dark mx-1' %>
+                     <% else %>
+                       <%= link_to '上线', publish_menu_path(@menu), method: :post, class: 'btn btn-sm btn-outline-dark mx-1' %>
+                     <% end %>
+                     <%= link_to('删除', @menu, method: :delete,
+                                 class: 'btn btn-sm btn-outline-danger mx-1',
+                                 data: {confirm: '确认删除？'}) %>
+                   </div>
+                 </td>
+               </tr>
+             </tbody>
+           </table>
+  </div>
+<% end %>

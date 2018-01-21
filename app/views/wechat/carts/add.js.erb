@@ -1,0 +1,11 @@
+$("#menu-<%= @menu.id %>").html("<%= @cart.item_quantity(@menu) %>");
+$("#cart-menu-<%= @menu.id %>-quantity").html("<%= @cart.item_quantity(@menu) %>");
+$("#cart-menu-<%= @menu.id %>-price").html("¥ <%= @cart.item_price(@menu) %>");
+$("#store-<%= @menu.store_id %>-cart").html("<%= @cart.total_quantity %>");
+$("#total-price").html("¥ <%= @cart.total_price %>")
+
+$("#cart").show();
+
+<% if @cart.item_quantity(@menu) == 1 %>
+$("#cart-<%= @menu.store_id %>").append("<%= j render('wechat/carts/cart_menu', item: @cart.item(@menu)) %>")
+<% end %>

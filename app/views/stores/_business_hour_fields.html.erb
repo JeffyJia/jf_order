@@ -1,0 +1,18 @@
+<div class="nested-fields">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-4">
+				<%= f.label :open_at, '开始时间' %>
+				<%= f.time_field :open_at, class: 'form-control' %>
+
+			</div>
+			<div class="col-4">
+				<%= f.label :close_at, '结束时间' %>
+				<%= f.time_field :close_at, class: 'form-control' %>
+			</div>
+			<div class="col-3 text-right">
+				<%= link_to_remove_association "移除此时间段", f, class: 'btn btn-outline-dark btn-sm' %>
+			</div>
+		</div>
+	</div>
+</div>

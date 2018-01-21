@@ -1,0 +1,5 @@
+<%= content_for :content do %>
+  <%= @order.to_json %>
+
+  <%= link_to '接单', confirm_order_path(@order), class: 'btn btn-primary', method: :post, data: { confirm: '确认接单？' } %>
+<% end %>

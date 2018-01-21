@@ -1,0 +1,11 @@
+<div class="jumbotron text-center bg-light">
+  <%= image_tag current_user.avatar, size: '80x80', class: 'rounded-circle' %><br>
+  <%= current_user.nickname %>
+</div>
+<div class="container">
+  <div class="list-group text-left">
+    <a href="<%= wechat_addresses_path %>" class="list-group-item list-group-item-action bg-light my-1">
+      地址管理
+    </a>
+  </div>
+</div>

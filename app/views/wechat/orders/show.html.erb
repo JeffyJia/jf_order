@@ -1,0 +1,93 @@
+<style>
+  .order-info {
+    padding: 13px;
+  }
+</style>
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="<%= url_for(:back) %>">
+    <%= image_tag "back.png", size: '30x30' %>
+  </a>
+  <span class="navbar-text">
+    订单详情
+  </span>
+</nav>
+
+<div class="container ">
+  <div class="order-info my-1">
+    <small><%= @order.updated_at.strftime('%Y-%m-%d %H:%M') %></small>
+    <div class="row">
+      <div class="col-8 text-left">
+        <a href="" class="text-muted">
+          <%= image_tag 'food3.jpg', size: '30x30', style: 'margin-right: 5px; margin-bottom: -5px' %>
+          <small><%= @order.store.name %></small>
+          <br>
+        </a>
+      </div>
+      <div class="col-4 text-right">
+        <%= order_state(@order) %>
+      </div>
+    </div>
+  </div>
+
+  <% @order.items.each do |item| %>
+    <div class="bg-light order-info my-1">
+      <div class="row">
+        <div class="col-3">
+          <%= image_tag 'food0.jpg', size: '56x46' %>
+        </div>
+        <div class="col-6">
+          <%= item[:menu].name %><br>
+          <small>x <%= item[:quantity] %></small>
+        </div>
+        <div class="col-3 text-right">
+          ¥<%= item[:menu].real_price %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="order-info my-1 text-right">
+    实付 ¥<%= @order.amount %>
+  </div>
+
+  <% unless @order.address.nil? %>
+    <span>配送信息</span><br>
+    <div class="bg-light order-info my-1">
+      <div class="row">
+        <div class="col-4">
+          配送地址：
+        </div>
+        <div class="col-8">
+          <%= @order.address.name %><br>
+          <%= @order.address.phone_number %><br>
+          <%= @order.address.info %><br>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <span>订单信息</span><br>
+  <div class="bg-light order-info my-1">
+    <div class="row">
+      <div class="col-4">
+        订单号：
+      </div>
+      <div class="col-8">
+        <%= @order.number %>
+      </div>
+    </div>
+  </div>
+
+
+
+  <% if @order.state == 'pending' %>
+    <div class="my-3 mx-3 text-right">
+      <%= link_to '取消订单', wechat_order_path(@order), method: :delete,
+                  class: "btn card-link btn-sm btn-outline-info", data: {confirm: 'Are you sure?'} %>
+      <%= link_to '支付', wechat_payment_path(order_id: @order.id), method: :post,
+                  class: "btn card-link btn-sm btn-outline-info" %>
+    </div>
+  <% end %>
+
+</div>

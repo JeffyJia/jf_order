@@ -1,0 +1,81 @@
+<style>
+  .list-group-item {
+    text-align: left;
+  }
+</style>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <%= image_tag 'food0.jpg', class: 'd-block w-100', height: 206 %>
+    </div>
+    <div class="carousel-item">
+      <%= image_tag 'food1.jpg', class: 'd-block w-100', height: 206 %>
+    </div>
+    <div class="carousel-item">
+      <%= image_tag 'food2.jpg', class: 'd-block w-100', height: 206 %>
+    </div>
+    <div class="carousel-item">
+      <%= image_tag 'food3.jpg', class: 'd-block w-100', height: 206 %>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<div class="container my-3">
+
+  <div class="row">
+    <div class="col-5">
+      <%= search_form_for [:wechat, @q] do |f| %>
+
+        <div class="form-group">
+          <%= f.collection_select :location_id_eq, Location.all,
+                                  :id, :name,
+                                  {include_blank: '选择食堂'},
+                                  {class: 'form-control'} %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <script>
+    $('#q_location_id_eq').change(function () {
+        $( "#store_search" ).submit();
+        console.log($(this).val());
+    });
+  </script>
+
+  <div class="list-group">
+    <% @stores.each_with_index do |store, index| %>
+      <a href="<%= wechat_store_path(store) %>" class="list-group-item list-group-item-action bg-light my-1">
+        <div class="row">
+
+          <div class="col-4 align-middle">
+            <%= image_tag "food#{index % 4}.jpg", width: 102, height: 86 %>
+          </div>
+
+          <div class="col-8">
+            <%= store.name %><br>
+            <small><%= truncate store.intro %></small>
+            <br>
+            <small><%= truncate store.location.name %></small>
+          </div>
+        </div>
+      </a>
+    <% end %>
+  </div>
+
+</div>

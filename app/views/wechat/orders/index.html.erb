@@ -1,0 +1,74 @@
+<style>
+  .list-group {
+    background-color: #f8f9fa;
+  }
+</style>
+<% if @orders.size > 0 %>
+  <div class="list-group">
+    <% @orders.each_with_index do |order, index| %>
+      <li class="list-group-item my-1">
+        <div class="text-left">
+          <small><%= order.updated_at.strftime('%Y-%m-%d %H:%M') %></small>
+        </div>
+        <div class="row">
+          <div class="col-8 text-left">
+            <a href="<%= wechat_store_path(order.items[0][:menu].store_id) %>" class="text-muted">
+              <%= image_tag 'food3.jpg', size: '30x30', style: 'margin-right: 5px; margin-bottom: -5px' %>
+              <small><%= order.store.name %></small>
+              <br>
+            </a>
+          </div>
+          <div class="col-4">
+            <%= order_state(order) %>
+          </div>
+        </div>
+        <hr>
+
+        <% order.items.each do |item| %>
+          <div class="row my-2 text-left">
+            <div class="col-3">
+              <%= image_tag 'food0.jpg', size: '56x46' %>
+            </div>
+            <div class="col-6">
+              <%= item[:menu].name %><br>
+              <small>x <%= item[:quantity] %></small>
+            </div>
+            <div class="col-3 text-right">
+              ¥<%= item[:menu].real_price %>
+            </div>
+          </div>
+        <% end %>
+
+        <hr>
+        <div class="row my-3">
+          <div class="col-6 text-left">
+            ¥ <%= order.amount %><br>
+          </div>
+          <div class="col-6">
+            <div class="text-right">
+              <%= link_to '删除', wechat_order_path(order), method: :delete,
+                          class: "btn btn-sm btn-outline-dark",
+                          data: {confirm: 'Are you sure?'} %>
+
+              <% if order.state == 'pending' %>
+                <%= link_to '支付', wechat_payment_path(order_id: order.id), method: :post,
+                            class: "btn btn-sm btn-outline-info",
+                            data: {confirm: 'Are you sure?'} %>
+              <% else %>
+                <%= link_to '详情', wechat_order_path(order),
+                            class: "btn btn-sm btn-outline-info" %>
+              <% end %>
+              <% if order.state == 'delivered' %>
+                <button type="submit" class="btn btn-sm btn-outline-info" href="javascript:">再来一单</button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </li>
+    <% end %>
+  </div>
+<% else %>
+  你还没有订单哦！
+<% end %>
+

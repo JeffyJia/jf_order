@@ -1,21 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>JfOrder</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>JfOrder</title>
+  <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
 
-  <body>
+<%= render 'layouts/header' %>
+<%= render 'users/shared/devise_notices' %>
+<div class="container">
+  <%= yield %>
+</div>
 
-    <%= render 'layouts/header' %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+<% if user_signed_in? %>
+  <div class="container-fluid">
+    <div class="row">
 
-    <%= yield %>
+      <div class="col-3 bg-sidebar">
+        <%= render 'layouts/sidebar' %>
+      </div>
 
-  </body>
+      <div class="col-9">
+        <div class="container">
+          <br>
+          <%= yield :content %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<% end %>
+
+</body>
 </html>

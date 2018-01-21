@@ -1,0 +1,21 @@
+<%= content_for :content do %>
+
+  <%= render 'shared/title', title: @location.name %>
+
+  <div class="btn-group btn-group-sm my-2">
+    <%= link_to 'Show', @location, class: 'btn btn-sm btn-outline-dark mx-2' %>
+    <%= link_to 'Back', locations_path, class: 'btn btn-sm btn-outline-dark' %>
+  </div>
+
+  <div class="row">
+    <div class="col-7">
+      <div class="card mb-3 border-info">
+        <div class="card-body">
+
+          <%= render 'form', location: @location %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

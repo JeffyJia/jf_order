@@ -1,0 +1,16 @@
+<%= content_for :content do %>
+
+  <%= render 'shared/title', title: '编辑商铺' %>
+  <div class="row">
+    <div class="col-7">
+      <div class="card mb-3 border-info">
+        <div class="card-body">
+
+          <%= render 'form', store: @store %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,17 @@
+<br><br><br>
+<br><br><br>
+<div class="container">
+  <div class="text-center">
+    <span>正在支付...</span>
+  </div>
+  <%= link_to '', wechat_payment_path(order_id: @order.id), method: :post, id: 'paybtn' %>
+</div>
+<script>
+    setTimeout(function () {
+        var e = document.createEvent("MouseEvents");
+        e.initEvent("click", true, true);
+
+        document.getElementById("paybtn").dispatchEvent(e);
+
+    }, 1500);
+</script>

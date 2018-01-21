@@ -1,0 +1,59 @@
+<style>
+  .order-info {
+    padding: 13px;
+  }
+</style>
+<!-- Just an image -->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="<%= url_for(:back) %>">
+    <%= image_tag "back.png", size: '30x30' %>
+  </a>
+  <span class="navbar-text">
+    确认订单
+  </span>
+</nav>
+<div class=" ">
+  <div class="card">
+    <div class="order-info my-1">
+      <div class="row">
+        <div class="col-8">
+          <%= @order.store.name %>
+        </div>
+
+        <div class="col-4 text-right">
+          ¥ <%= @order.amount %>
+        </div>
+      </div>
+    </div>
+    <%= form_for [:wechat, @order] do |f| %>
+      <%= f.hidden_field :menus %>
+      <%= f.hidden_field :store_id %>
+      <%= f.collection_select(:address_id,
+                              current_user.addresses.all, :id, :address_info,
+                              {include_blank: true},
+                              {:class => 'form-control'}) %>
+      <% @order.items.each do |item| %>
+        <div class="bg-light order-info my-1">
+          <div class="row">
+            <div class="col-3">
+              <%= image_tag 'food0.jpg', size: '56x46' %>
+            </div>
+            <div class="col-6">
+              <%= item[:menu].name %><br>
+              <small>x <%= item[:quantity] %></small><br>
+            </div>
+            <div class="col-3 text-right">
+              ¥<%= item[:menu].real_price %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <div class="my-3 mx-3 text-right">
+        <%= f.submit '去支付', class: "btn card-link btn-sm btn-outline-info" %>
+      </div>
+    <% end %>
+
+
+  </div>
+
+</div>

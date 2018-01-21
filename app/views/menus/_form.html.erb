@@ -1,0 +1,44 @@
+<%= form_with(model: menu, local: true, html: {multipart: true}) do |form| %>
+  <div class="box-body">
+    <% if menu.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(menu.errors.count, "error") %> prohibited this menu from being saved:</h2>
+
+        <ul>
+          <% menu.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+    <div class="form-group">
+      <%= form.label :name, '*菜名：' %>
+      <%= form.text_field :name, id: :menu_name, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :intro, '*介绍：' %>
+      <%= form.text_field :intro, id: :menu_intro, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :price, '*价格：' %>
+      <%= form.number_field :price, id: :menu_price, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :store_id, '*商铺名：' %>
+      <%= form.collection_select(:store_id, stores_for_roles, :id, :store_and_user,
+                                 {include_blank: false},
+                                 {class: 'form-control'}) %>
+    </div>
+
+    <div class="box-footer text-right">
+      <div class="btn-group" role="group">
+        <%= form.submit '确 认', class: 'btn btn-outline-info mx-2' %>
+      </div>
+    </div>
+  </div>
+<% end %>

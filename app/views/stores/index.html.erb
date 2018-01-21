@@ -1,0 +1,34 @@
+<%= content_for :content do %>
+
+  <%= render 'shared/title', title: '商铺管理' %>
+
+  <%= search_form_for @q do |f| %>
+    <div class="row">
+      <div class="col-4">
+        <div class="input-group">
+          <%= f.search_field :name_cont, class: 'form-control', placeholder: '商铺名' %>
+          <span class="input-group-btn">
+            <%= f.submit '搜索', class: 'btn btn-outline-dark' %>
+          </span>
+        </div>
+      </div>
+
+      <div class="col-4"> </div>
+      <div class="col-4"></div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <% @stores.each do |store| %>
+      <div class="col-4 my-3">
+        <%= render store %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @stores %>
+
+  <div class="fixed-action-btn">
+    <%= link_to '+添加商铺', new_store_path, class: 'btn btn-danger' %>
+  </div>
+<% end %>

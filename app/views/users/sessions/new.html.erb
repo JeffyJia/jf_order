@@ -1,39 +1,41 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-6">
-      <button type="button" class="btn btn-lg btn-secondary btn-block">Log in</button>
-
-      <div class="jumbotron">
+<br><br>
+<br><br>
+<div class="row justify-content-center">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header text-center">
+        <h2>登录</h2>
+      </div>
+      <div class="card-body">
 
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-            <div class="form-group field">
-              <%= f.label :email, 'Email' %><br/>
-              <%= f.email_field :email, autofocus: true, class: 'form-control' %>
-            </div>
+          <div class="form-group field">
+            <%= f.label :email, '邮箱' %><br/>
+            <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+          </div>
 
-            <div class="form-group field">
-              <%= f.label :password, 'Password' %><br/>
-              <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-            </div>
+          <div class="form-group field">
+            <%= f.label :password, '密码' %><br/>
+            <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+          </div>
 
-            <% if devise_mapping.rememberable? -%>
-                <div class="form-group field">
-                  <%= f.check_box :remember_me %>
-                  <%= f.label :remember_me %>
-                </div>
-            <% end -%>
-
-            <div class="text-right actions">
-              <%= f.submit "Log in", class: 'btn btn-secondary' %>
+          <% if devise_mapping.rememberable? -%>
+            <div class="form-check field">
+              <label class="form-check-label">
+                <%= f.check_box :remember_me, class: 'form-check-input' %>
+                记住我
+              </label>
             </div>
+          <% end -%>
+
+          <div class="actions">
+            <%= f.submit '确认', class: 'btn btn-primary' %>
+          </div>
         <% end %>
 
-        <hr>
-
-        <div class="small text-right">
-          <%= render "users/shared/links" %>
-        </div>
-
+      </div>
+      <div class="card-footer text-muted">
+        <%= render "users/shared/links" %>
       </div>
     </div>
   </div>

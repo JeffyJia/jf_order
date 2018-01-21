@@ -12,3 +12,56 @@
  *
  */
 @import "bootstrap";
+@import "dropzone/dropzone";
+
+.bg-sidebar {
+  border-right: 5px solid rgba(23, 162, 184, 0.5);
+  height: 1580px;
+  padding-top: 20px;
+}
+
+.list-group-item {
+  border: none;
+  text-align: center;
+}
+
+.fixed-action-btn {
+  position: fixed;
+  right: 0;
+  bottom: 59px;
+  padding-top: 15px;
+  margin-bottom: 0;
+  z-index: 997;
+}
+
+.fixed-cart-btn {
+  position: fixed;
+  left: 0;
+  bottom: 59px;
+  padding-top: 15px;
+  margin-bottom: 0;
+  z-index: 997;
+}
+
+.circle-btn {
+  height: 58px;
+  padding-top: 12px;
+  border-radius: 50%
+}
+
+.page-link {
+  color: $secondary;
+}
+
+.custom-nav {
+  padding: 0.8rem 3rem;
+}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 1.25s linear;
+  -moz-transition: opacity 1.25s linear;
+  -ms-transition: opacity 1.25s linear;
+  -o-transition: opacity 1.25s linear;
+  transition: opacity 1.25s linear;
+}

@@ -1,0 +1,20 @@
+<div id="cart-menu-<%= item.menu_id %>" class="row">
+  <div class="col-4">
+    <p><%= truncate item.menu.name, length: 15 %></p>
+  </div>
+  <div class="col-4">
+    <p id="cart-menu-<%= item.menu_id %>-price">¥<%= item.price %></p>
+  </div>
+  <div class="col-4 text-right">
+
+    <div class="btn-group btn-group-sm" role="group">
+      <%= link_to minus_wechat_cart_path(item.menu), method: :delete, remote: true, class: 'btn btn-light btn-sm' do %>
+        <%= image_tag 'minus.png', width: 18 %>
+      <% end %>
+      <span id="cart-menu-<%= item.menu_id %>-quantity" class="btn btn-sm"><%= item.quantity %></span>
+      <%= link_to add_wechat_cart_path(item.menu), method: :post, remote: true, class: 'btn btn-light btn-sm' do %>
+        <%= image_tag 'add.png', width: 18 %>
+      <% end %>
+    </div>
+  </div>
+</div>

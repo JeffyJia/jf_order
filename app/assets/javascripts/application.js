@@ -12,7 +12,11 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require dropzone
+//= require_tree .
+//= require cocoon
+//= require Chart.bundle
+//= require chartkick

@@ -1,0 +1,17 @@
+$("#menu-<%= @menu.id %>").html("<%= @cart.item_quantity(@menu) %>");
+$("#cart-menu-<%= @menu.id %>-quantity").html("<%= @cart.item_quantity(@menu) %>");
+$("#cart-menu-<%= @menu.id %>-price").html("¥ <%= @cart.item_price(@menu) %>");
+$("#store-<%= @menu.store_id %>-cart").html("<%= @cart.total_quantity %>");
+$("#total-price").html("¥ <%= @cart.total_price %>")
+
+// 如果某个菜品数量为 0 ，就从购物车视图中移除
+<% if @cart.item_quantity(@menu) == 0 %>
+$("#cart-menu-<%= @menu.id %>").remove();
+<% end %>
+
+// 如果购物车为空 ，就隐藏购物车视图
+<% if @cart.total_quantity == 0 %>
+$("#cart").hide();
+$('#store-<%= @menu.store_id %>-cart-modal').modal('hide')
+<% end %>
+

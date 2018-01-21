@@ -1,0 +1,13 @@
+button:
+ -
+  type: "view"
+  name: "点餐"
+  url:  "http://zhu.natapp1.cc/wechat/stores"
+ -
+  type: "view"
+  name: "我的订单"
+  url:  "http://zhu.natapp1.cc/wechat/orders"
+ -
+  type: "view"
+  name: "关于"
+  url:  "http://zhu.natapp1.cc/users/auth/wechat"

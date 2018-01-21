@@ -1,0 +1,31 @@
+<%= content_for :content do %>
+
+  <%= render 'shared/title', title: '菜品管理' %>
+
+  <div class="row">
+    <% @locations.each do |location| %>
+      <div class="col-6">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container text-center">
+            <h1 class="display-4">
+              <%= location.name %>
+            </h1>
+
+            <div class="btn-group" role="group">
+              <%= link_to '详情', location, class: 'btn btn-sm btn-outline-dark mx-1' %>
+              <%= link_to '编辑', edit_location_path(location), class: 'btn btn-sm btn-outline-dark mx-1' %>
+              <%= link_to '删除', location, method: :delete, data: {confirm: 'Are you sure?'},
+                          class: 'btn btn-sm btn-outline-danger mx-1' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+
+
+  <br>
+
+  <%= link_to '添加食堂', new_location_path, class: 'btn btn-outline-danger' %>
+<% end %>

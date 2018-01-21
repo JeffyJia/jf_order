@@ -1,0 +1,21 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="<%= wechat_addresses_path %>">
+    地址管理
+  </a>
+</nav>
+
+<div class="container">
+  <div class="list-group">
+    <% @addresses.each do |address| %>
+      <a href="<%= wechat_address_path(address) %>" class="list-group-item list-group-item-action bg-light my-1 text-left">
+        <%= address.name %>-<%= address.phone_number %><br>
+        <%= address.info %><br>
+      </a>
+    <% end %>
+  </div>
+  <br>
+  <div class="text-right">
+    <%= link_to '添加地址', new_wechat_address_path, class: 'btn btn-sm btn-outline-info' %>
+  </div>
+</div>
+

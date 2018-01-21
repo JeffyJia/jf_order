@@ -1,0 +1,25 @@
+<style>
+  .card:hover {
+    box-shadow: 0 0 3px 5px rgba(220, 221, 221, 0.377);
+  }
+</style>
+
+<div class="card" style="width: 18rem;">
+
+  <% unless store.picture.nil? %>
+    <%= image_tag store.picture.url, size: '150x250', class: 'card-img-top' %>
+  <% end %>
+
+  <div class="card-body">
+    <h4 class="card-title"><%= truncate store.name, length: 17 %></h4>
+    <p class="card-text"><%= truncate store.user.email, length: 25 %></p>
+
+    <div class="btn-group btn-group-sm">
+      <%= link_to '详情', store, class: 'btn btn-sm btn-outline-dark' %>
+      <%= link_to '编辑', edit_store_path(store), class: 'btn btn-sm btn-outline-dark mx-1' %>
+      <%= link_to('删除', store, method: :delete,
+                  class: 'btn btn-sm btn-outline-danger',
+                  data: {confirm: '确认删除？'}) %>
+    </div>
+  </div>
+</div>

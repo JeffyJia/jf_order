@@ -1,0 +1,26 @@
+<div class="container text-center">
+
+  <div class="text-right">
+    <%= link_to '注 销', destroy_user_session_path, method: :delete, data: { confirm: '确认注销？'}, class: 'btn btn-sm btn-outline-dark' %>
+  </div>
+  <div class="avatar my-3">
+    <%= letter_avatar_tag(current_user.email, 88, class: 'rounded-circle') %>
+  </div>
+  <h5><%= current_user.email %></h5>
+</div>
+
+<br><br>
+
+<div class="list-group">
+  <%= link_to "商铺管理", stores_path, class: "list-group-item list-group-item-action my-2 bg-light" %>
+  <%= link_to "菜品管理", menus_path, class: "list-group-item list-group-item-action my-2 bg-light" %>
+  <%= link_to "订单管理", orders_path, class: "list-group-item list-group-item-action my-2 bg-light" %>
+
+  <% if current_user.admin? %>
+    <%= link_to "食堂管理", locations_path, class: "list-group-item list-group-item-action my-2 bg-light" %>
+    <%= link_to "用户管理", users_path, class: "list-group-item list-group-item-action my-2 bg-light" %>
+    <%= link_to "系统设置", '', class: "list-group-item list-group-item-action my-2 bg-light" %>
+    <%= link_to 'Sidekiq 监视器', "/sidekiq", class: 'list-group-item list-group-item-action my-2 bg-light', target: '_blank' %>
+  <% end %>
+
+</div>
